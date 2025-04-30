@@ -1,0 +1,28 @@
+services:
+  reverseproxy:
+    image: rlaqhguse/reverseproxy:latest
+    container_name: reverseproxy
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      if-network:
+        aliases:
+          - reverseproxy
+    depends_on:
+      - react
+    # volumes:
+    #   - /etc/letsencrypt/live/investfuture.my/fullchain.pem:/etc/letsencrypt/live/investfuture.my/fullchain.pem
+    #   - /etc/letsencrypt/live/investfuture.my/privkey.pem:/etc/letsencrypt/live/investfuture.my/privkey.pem
+  react:
+    image: rlaqhguse/if-fe:latest
+    container_name: react
+    ports:
+      - "3000:80"
+    networks:
+      if-network:
+        aliases:
+          - react
+networks:
+  if-network:
+    driver: bridge
