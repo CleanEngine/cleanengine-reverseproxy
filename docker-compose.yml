@@ -9,10 +9,10 @@ services:
       if-network:
         aliases:
           - reverseproxy
-
-    # volumes:
-    #   - /etc/letsencrypt/live/investfuture.my/fullchain.pem:/etc/letsencrypt/live/investfuture.my/fullchain.pem
-    #   - /etc/letsencrypt/live/investfuture.my/privkey.pem:/etc/letsencrypt/live/investfuture.my/privkey.pem
+    volumes:
+      - /etc/letsencrypt/live/investfuture.my/fullchain.pem:/etc/nginx/certs/fullchain.pem
+      - /etc/letsencrypt/live/investfuture.my/privkey.pem:/etc/nginx/certs/privkey.pem
+    user: root
   react:
     image: rlaqhguse/if-fe:latest
     container_name: react
