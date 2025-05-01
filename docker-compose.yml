@@ -2,6 +2,7 @@ services:
   reverseproxy:
     image: rlaqhguse/reverseproxy:latest
     container_name: reverseproxy
+    restart: on-failure
     ports:
       - "80:80"
       - "443:443"
@@ -16,12 +17,24 @@ services:
   react:
     image: rlaqhguse/if-fe:latest
     container_name: react
+    restart: on-failure
     ports:
       - "3000:80"
     networks:
       if-network:
         aliases:
           - react
+  backend:
+    image: rlaqhguse/if-be:latest
+    container_name: springboot
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    networks:
+      if-network:
+        aliases:
+          - springboot
+  
 networks:
   if-network:
     driver: bridge
