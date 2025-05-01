@@ -1,10 +1,10 @@
 name: Start services
 
-run-name: Start containers in cloud service by @{{github.actor}}
+run-name: Start containers in cloud service by ${{ github.actor }}
 
 on:
   workflow_run:
-    workflows: [Deploy nginx]
+    workflows: [Copy Compose]
     types:
       - completed
 
@@ -21,6 +21,8 @@ jobs:
           port: ${{secrets.CLOUD_PORT}}
           script: |
             cd ~
-            ls -al
+            sudo docker compose down --volumes
+            sudo docker image prune -f
+            sudo docker compose up -d
 
         
