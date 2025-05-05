@@ -19,7 +19,7 @@ services:
     container_name: react
     restart: on-failure
     ports:
-      - "3000:80"
+      - "3000:3000"
     networks:
       if-network:
         aliases:
