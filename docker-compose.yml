@@ -35,6 +35,28 @@ services:
         aliases:
           - springboot
   
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    # restart: on-failure
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      if-network:
+        aliases:
+          - mariadb
+
 networks:
   if-network:
     driver: bridge
+
+volumes:
+  mariadb-data:

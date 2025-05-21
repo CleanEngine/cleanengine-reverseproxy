@@ -20,5 +20,5 @@ jobs:
           username: ${{ secrets.CLOUD_USERNAME }}
           key: ${{ secrets.CLOUD_SECRET_KEY }}
           port: ${{ secrets.CLOUD_PORT }}
-          source: "docker-compose.yml"
+          source: "."
           target: "~"

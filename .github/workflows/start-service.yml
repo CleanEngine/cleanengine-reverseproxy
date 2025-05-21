@@ -21,6 +21,10 @@ jobs:
           port: ${{secrets.CLOUD_PORT}}
           script: |
             cd ~
+            echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD }}" > .env
+            echo "MARIADB_USER=${{ secrets.MARIADB_USER }}" >> .env
+            echo "MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD }}" >> .env
+            echo "MARIADB_DATABASE=${{ secrets.MARIADB_DATABASE }}" >> .env
             sudo docker compose down --volumes
             sudo docker container prune -f
             sudo docker image prune -a -f
