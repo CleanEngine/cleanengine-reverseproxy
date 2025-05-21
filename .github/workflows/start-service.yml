@@ -26,6 +26,7 @@ jobs:
             echo "MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD }}" >> .env
             echo "MARIADB_DATABASE=${{ secrets.MARIADB_DATABASE }}" >> .env
             echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
             sudo docker compose down --volumes
             sudo docker container prune -f
             sudo docker image prune -a -f
