@@ -36,6 +36,9 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/share/zoneinfo/Asia/Seoul:/etc/timezone:ro
     networks:
       if-network:
         aliases:
