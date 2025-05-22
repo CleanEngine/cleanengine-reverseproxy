@@ -39,6 +39,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /usr/share/zoneinfo/Asia/Seoul:/etc/timezone:ro
+      - /home/ubuntu/logs/springboot:/app/logs
     networks:
       if-network:
         aliases:
