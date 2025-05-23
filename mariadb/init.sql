@@ -10,7 +10,8 @@ create table asset
 (
     ticker varchar(10)  not null
         primary key,
-    name   varchar(100) null
+    name   varchar(100) null,
+    icon blob null
 );
 
 create table buy_orders
