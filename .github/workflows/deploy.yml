@@ -1,6 +1,6 @@
 name: Deploy nginx
 
-run-name: Deploy nginx as reverse proxy image to docker hub by ${{github.actor}}
+run-name: Deploy nginx as reverse proxy image to docker hub and start service by ${{github.actor}}
 
 on:
   push:
@@ -23,3 +23,24 @@ jobs:
       - name: Push image to Docker hub
         run: |
           docker push ${{secrets.DOCKER_USERNAME}}/reverseproxy:latest
+      - name: Connect to cloud server and start service
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{secrets.LOAD_BALANCER_HOST}}
+          username: ${{secrets.LOAD_BALANCER_USERNAME}}
+          key: ${{secrets.LOAD_BALANCER_SECRET_KEY}}
+          port: ${{secrets.LOAD_BALANCER_PORT}}
+          script: |
+            cd ~
+            docker stop reverseproxy || true
+            docker rm reverseproxy || true
+            docker rmi ${{secrets.DOCKER_USERNAME}}/reverseproxy:latest || true
+            docker pull ${{secrets.DOCKER_USERNAME}}/reverseproxy:latest
+            docker run -d \
+            --name reverseproxy \
+            --restart always \
+            -p 80:80 \
+            -p 443:443 \
+            -v /etc/letsencrypt/live/investfuture.my/fullchain.pem:/etc/nginx/certs/fullchain.pem \
+            -v /etc/letsencrypt/live/investfuture.my/privkey.pem:/etc/nginx/certs/privkey.pem \
+            ${{secrets.DOCKER_USERNAME}}/reverseproxy:latest
