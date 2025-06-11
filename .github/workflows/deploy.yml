@@ -41,6 +41,7 @@ jobs:
             --restart always \
             -p 80:80 \
             -p 443:443 \
+            -p 443:443/udp \
             -v /etc/letsencrypt/live/investfuture.my/fullchain.pem:/etc/nginx/certs/fullchain.pem \
             -v /etc/letsencrypt/live/investfuture.my/privkey.pem:/etc/nginx/certs/privkey.pem \
             ${{secrets.DOCKER_USERNAME}}/reverseproxy:latest
